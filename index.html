@@ -92,43 +92,44 @@
             max-height: 80vh; /* Limita a altura da imagem para 80% da altura da tela */
             display: block;
             margin: 0 auto;
+            margin-left: 10px; /* Ajusta a imagem para a direita */
             object-fit: contain; /* Ajusta a imagem sem distorcer */
             border-radius: 10px; /* Arredonda os cantos da imagem */
         }
         /* Efeito de luz piscando */
         @keyframes glow {
             0% {
-                box-shadow: 0 0 15px 5px rgba(0, 0, 255, 0.8); /* Azul */
+                box-shadow: 0 0 8px 2px rgba(0, 0, 255, 0.4); /* Azul mais suave */
             }
             50% {
-                box-shadow: 0 0 25px 10px rgba(0, 0, 255, 1); /* Azul mais forte */
+                box-shadow: 0 0 12px 4px rgba(0, 0, 255, 0.6); /* Azul mais forte */
             }
             100% {
-                box-shadow: 0 0 15px 5px rgba(0, 0, 255, 0.8); /* Azul */
+                box-shadow: 0 0 8px 2px rgba(0, 0, 255, 0.4); /* Azul mais suave */
             }
         }
 
         @keyframes glowRed {
             0% {
-                box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.8); /* Vermelho */
+                box-shadow: 0 0 8px 2px rgba(255, 0, 0, 0.4); /* Vermelho mais suave */
             }
             50% {
-                box-shadow: 0 0 25px 10px rgba(255, 0, 0, 1); /* Vermelho mais forte */
+                box-shadow: 0 0 12px 4px rgba(255, 0, 0, 0.6); /* Vermelho mais forte */
             }
             100% {
-                box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.8); /* Vermelho */
+                box-shadow: 0 0 8px 2px rgba(255, 0, 0, 0.4); /* Vermelho mais suave */
             }
         }
 
         @keyframes glowGreen {
             0% {
-                box-shadow: 0 0 15px 5px rgba(0, 255, 0, 0.8); /* Verde */
+                box-shadow: 0 0 8px 2px rgba(0, 255, 0, 0.4); /* Verde mais suave */
             }
             50% {
-                box-shadow: 0 0 25px 10px rgba(0, 255, 0, 1); /* Verde mais forte */
+                box-shadow: 0 0 12px 4px rgba(0, 255, 0, 0.6); /* Verde mais forte */
             }
             100% {
-                box-shadow: 0 0 15px 5px rgba(0, 255, 0, 0.8); /* Verde */
+                box-shadow: 0 0 8px 2px rgba(0, 255, 0, 0.4); /* Verde mais suave */
             }
         }
 
@@ -179,8 +180,7 @@
         /* Ajuste para telas pequenas (celulares) */
         @media (max-width: 768px) {
             .image-container img {
-                max-width: 90%; /* Reduz a largura da imagem em dispositivos móveis */
-                margin-left: 0; /* Remove a margem à esquerda */
+                max-width: 85%; /* Reduz a largura da imagem em dispositivos móveis */
             }
         }
     </style>
