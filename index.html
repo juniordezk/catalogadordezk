@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galeria de IA</title>
+    <title>CATALOGADOR</title>
     <style>
         body {
             margin: 0;
@@ -15,6 +15,55 @@
             flex-direction: column;
             height: 100vh;
         }
+
+        /* Tela de bloqueio */
+        .lock-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            flex-direction: column;
+        }
+        .lock-screen img {
+            width: 200px;
+            margin-bottom: 20px;
+        }
+        .lock-screen input {
+            padding: 10px;
+            font-size: 16px;
+            width: 250px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 2px solid orange;
+            background-color: #333;
+            color: white;
+            border-radius: 5px;
+        }
+        .lock-screen button {
+            padding: 10px;
+            font-size: 16px;
+            width: 270px;
+            background-color: #0077cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .lock-screen button:hover {
+            background-color: #005fa3;
+        }
+
+        /* Conteúdo após desbloqueio */
+        .content {
+            display: none;
+        }
+
         header {
             background-color: rgba(0, 0, 0, 0.5); /* Fundo transparente */
             padding: 10px;
@@ -188,48 +237,70 @@
     </style>
 </head>
 <body>
-    <header>
-        <div class="menu">
-            <a href="#" class="active ia-kaum" onclick="changePage(0)">IA Kaum</a>
-            <a href="#" class="ia-mma" onclick="changePage(1)">IA MMA</a>
-            <a href="#" class="ia-dailler" onclick="changePage(2)">IA Dailler</a>
-        </div>
-    </header>
 
-    <div class="container">
-        <div id="page-0" class="page ia-kaum" style="display: block;">
-            <div class="image-container">
-                <span class="arrow arrow-left" onclick="prevImage(0)">&#10094;</span>
-                <img src="https://i.imgur.com/jEfPeuy.png" id="image-0" alt="IA Kaum">
-                <span class="arrow arrow-right" onclick="nextImage(0)">&#10095;</span>
+    <!-- Tela de bloqueio -->
+    <div class="lock-screen" id="lockScreen">
+        <img src="https://i.imgur.com/yoUFcje.png" alt="Imagem de Bloqueio">
+        <input type="password" id="password" placeholder="Digite a senha" autofocus>
+        <button onclick="checkPassword()">Entrar</button>
+    </div>
+
+    <!-- Conteúdo protegido -->
+    <div class="content" id="content">
+        <header>
+            <div class="menu">
+                <a href="#" class="active ia-kaum" onclick="changePage(0)">IA Kaum</a>
+                <a href="#" class="ia-mma" onclick="changePage(1)">IA MMA</a>
+                <a href="#" class="ia-dailler" onclick="changePage(2)">IA Dailler</a>
             </div>
-            <div class="bet-container" id="bet-0">
-                <iframe src="https://reals.bet.br/live-casino/game/1402430?provider=Evolution&from=%2Flive-casino" title="Casa de Apostas IA Kaum"></iframe>
+        </header>
+
+        <div class="container">
+            <div id="page-0" class="page ia-kaum" style="display: block;">
+                <div class="image-container">
+                    <span class="arrow arrow-left" onclick="prevImage(0)">&#10094;</span>
+                    <img src="https://i.imgur.com/jEfPeuy.png" id="image-0" alt="IA Kaum">
+                    <span class="arrow arrow-right" onclick="nextImage(0)">&#10095;</span>
+                </div>
+                <div class="bet-container" id="bet-0">
+                    <iframe src="https://reals.bet.br/live-casino/game/1402430?provider=Evolution&from=%2Flive-casino" title="Casa de Apostas IA Kaum"></iframe>
+                </div>
             </div>
-        </div>
-        <div id="page-1" class="page ia-mma" style="display: none;">
-            <div class="image-container">
-                <span class="arrow arrow-left" onclick="prevImage(1)">&#10094;</span>
-                <img src="https://i.imgur.com/1yDajnb.jpeg" id="image-1" alt="IA MMA">
-                <span class="arrow arrow-right" onclick="nextImage(1)">&#10095;</span>
+            <div id="page-1" class="page ia-mma" style="display: none;">
+                <div class="image-container">
+                    <span class="arrow arrow-left" onclick="prevImage(1)">&#10094;</span>
+                    <img src="https://i.imgur.com/1yDajnb.jpeg" id="image-1" alt="IA MMA">
+                    <span class="arrow arrow-right" onclick="nextImage(1)">&#10095;</span>
+                </div>
+                <div class="bet-container" id="bet-1">
+                    <iframe src="https://reals.bet.br/live-casino/game/1402430?provider=Evolution&from=%2Flive-casino" title="Casa de Apostas IA MMA"></iframe>
+                </div>
             </div>
-            <div class="bet-container" id="bet-1">
-                <iframe src="https://reals.bet.br/live-casino/game/1402430?provider=Evolution&from=%2Flive-casino" title="Casa de Apostas IA MMA"></iframe>
-            </div>
-        </div>
-        <div id="page-2" class="page ia-dailler" style="display: none;">
-            <div class="image-container">
-                <span class="arrow arrow-left" onclick="prevImage(2)">&#10094;</span>
-                <img src="https://i.imgur.com/rlNc9fC.jpeg" id="image-2" alt="IA Dailler">
-                <span class="arrow arrow-right" onclick="nextImage(2)">&#10095;</span>
-            </div>
-            <div class="bet-container" id="bet-2">
-                <iframe src="https://reals.bet.br/live-casino/game/1402430?provider=Evolution&from=%2Flive-casino" title="Casa de Apostas IA Dailler"></iframe>
+            <div id="page-2" class="page ia-dailler" style="display: none;">
+                <div class="image-container">
+                    <span class="arrow arrow-left" onclick="prevImage(2)">&#10094;</span>
+                    <img src="https://i.imgur.com/rlNc9fC.jpeg" id="image-2" alt="IA Dailler">
+                    <span class="arrow arrow-right" onclick="nextImage(2)">&#10095;</span>
+                </div>
+                <div class="bet-container" id="bet-2">
+                    <iframe src="https://reals.bet.br/live-casino/game/1402430?provider=Evolution&from=%2Flive-casino" title="Casa de Apostas IA Dailler"></iframe>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        // Função para verificar a senha
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            if (password === "20200") {
+                document.getElementById('lockScreen').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+            } else {
+                alert('Senha incorreta! Tente novamente.');
+            }
+        }
+
         const images = {
             0: [
                 "https://i.imgur.com/jEfPeuy.png",
