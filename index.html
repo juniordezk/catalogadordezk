@@ -75,21 +75,21 @@
             align-items: center;
             flex-grow: 1;
             position: relative;
-            flex-direction: column; /* Adiciona coluna para empilhar imagem e casa de apostas */
-            padding: 10px; /* Espaço ao redor da área */
         }
         .image-container {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            max-width: 30%; /* Reduzi a largura da imagem para 30% */
-            margin-bottom: 20px; /* Distância entre a imagem e a casa de apostas */
+            max-width: 100%;
+            max-height: 80vh;
         }
         .image-container img {
             width: 100%;
             height: auto;
+            max-height: 80vh;
             display: block;
+            margin: 0 auto;
             object-fit: contain; /* Ajusta a imagem sem distorcer */
             border-radius: 10px; /* Arredonda os cantos da imagem */
         }
@@ -159,24 +159,20 @@
         .arrow-right {
             right: -60px; /* Afastei as setas para a direita */
         }
-
-        /* Estilos para a Casa de Apostas */
         .bet-container {
             margin-top: 20px;
+            text-align: center;
+            border: 2px solid orange; /* Borda laranja mais fina */
+            border-radius: 10px; /* Cantos arredondados */
+            padding: 10px;
             width: 100%;
-            max-width: 1200px; /* Limita a largura da casa de apostas */
-            height: 500px;
-            border: 2px solid orange; /* Borda laranja */
-            border-radius: 10px;
-            overflow: hidden;
+            max-width: 1200px;
         }
-
-        .bet-container iframe {
+        iframe {
             width: 100%;
-            height: 100%;
+            height: 800px; /* Aumentei a altura da casa de apostas */
             border: none;
         }
-
     </style>
 </head>
 <body>
@@ -195,32 +191,27 @@
                 <img src="https://i.imgur.com/jEfPeuy.png" id="image-0" alt="IA Kaum">
                 <span class="arrow arrow-right" onclick="nextImage(0)">&#10095;</span>
             </div>
-            <!-- Casa de Apostas para IA Kaum -->
-            <div class="bet-container">
+            <div class="bet-container" id="bet-0">
                 <iframe src="https://reals.bet.br/live-casino/game/1402430?provider=Evolution&from=%2Flive-casino" title="Casa de Apostas IA Kaum"></iframe>
             </div>
         </div>
-
         <div id="page-1" class="page ia-mma" style="display: none;">
             <div class="image-container">
                 <span class="arrow arrow-left" onclick="prevImage(1)">&#10094;</span>
                 <img src="https://i.imgur.com/1yDajnb.jpeg" id="image-1" alt="IA MMA">
                 <span class="arrow arrow-right" onclick="nextImage(1)">&#10095;</span>
             </div>
-            <!-- Casa de Apostas para IA MMA -->
-            <div class="bet-container">
+            <div class="bet-container" id="bet-1">
                 <iframe src="https://reals.bet.br/live-casino/game/1402430?provider=Evolution&from=%2Flive-casino" title="Casa de Apostas IA MMA"></iframe>
             </div>
         </div>
-
         <div id="page-2" class="page ia-dailler" style="display: none;">
             <div class="image-container">
                 <span class="arrow arrow-left" onclick="prevImage(2)">&#10094;</span>
                 <img src="https://i.imgur.com/rlNc9fC.jpeg" id="image-2" alt="IA Dailler">
                 <span class="arrow arrow-right" onclick="nextImage(2)">&#10095;</span>
             </div>
-            <!-- Casa de Apostas para IA Dailler -->
-            <div class="bet-container">
+            <div class="bet-container" id="bet-2">
                 <iframe src="https://reals.bet.br/live-casino/game/1402430?provider=Evolution&from=%2Flive-casino" title="Casa de Apostas IA Dailler"></iframe>
             </div>
         </div>
@@ -298,8 +289,7 @@
                     link.classList.add('active');
                 }
             });
-            // Atualiza a imagem ao mudar de página
-            updateImage(pageIndex);
+            // Não atualiza a casa de apostas ao mudar de página
         }
 
         function nextImage(pageIndex) {
